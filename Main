@@ -1,0 +1,116 @@
+def cipher():
+    while True:
+        print("==Cipher Mode==")
+        string = input("Input: ")
+        string2 = string.lower()
+        #allows user to return to main menu
+        if string2 == "main" or string2 == "m":
+            break
+        
+        else:    
+            str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            str2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            
+            #n will offset str2 from str1 (if n < 1 or n > 25, there will be no offset)
+            n = int(input("Code: "))
+            #extract up to n index and assign to sub
+            sub = str2[:n]
+            #sub removed from start of str2 and added to end of str2
+            new_str = (str2.replace(sub, "")) + sub
+            
+            #letters in str1 added as keys to dict1 and corresponding index values assigned using for loop
+            dict1 = {}
+            x = 0
+            for letter in str1:
+                dict1[letter] = x
+                x += 1
+                
+            #finds index positions of spaces in string and appends to lst3 as spaces will be lost
+            lst3 = []
+            space = 0
+            while space < len(string):
+                space = string.find(" ", space)
+                if space == -1:
+                    break
+                lst3.append(space)
+                space += 1
+                
+            #loops over letters in user's string. If letter == key in dict1, corresponding index in str2 appended to lst4      
+            lst4 = []
+            string = string.upper()
+            for letter in string:
+                for i, v in dict1.items():
+                    if letter == i:
+                        lst4.append(new_str[v])
+            #index spaces in string are inserted using for loop
+            for i in lst3:
+                lst4.insert(i, " ")
+            print("Output: ", "".join(lst4))
+
+def decipher():
+    while True:
+        print("==Decipher Mode==")
+        string = input("Input: ")
+        string2 = string.lower()
+        if string2 == "main" or string2 == "m":
+            break
+        
+        else:
+            str1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            str2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+          
+            #n here will counteract offset created by n in cipher() as long as n is the same in cipher() and decipher()
+            n = int(input("Code: "))
+            #extract from nth position (from right to left) and assign to sub
+            sub = str2[-n:]
+            #sub added to start of str2 and sub removed from end of str2
+            new_str = sub + (str2.replace(sub, ""))
+            
+            #letters in str2 added as keys to dict1 and corresponding index values assigned using for loop
+            dict1 = {}
+            y = 0
+            for letter in str2:
+                dict1[letter] = y
+                y += 1
+                
+            #finds index positions of spaces in string and appends to lst3 as spaces will be lost
+            lst3 = []
+            space = 0
+            while space < len(string):
+                space = string.find(" ", space)
+                if space == -1:
+                    break
+                lst3.append(space)
+                space += 1
+                
+            #loops over letters in user's string. If letter == key in dict1, corresponding index in str2 appended to lst4         
+            lst4 = []
+            string = string.upper()
+            for letter in string:
+                for i, v in dict1.items():
+                    if letter == i:
+                        lst4.append(new_str[v])
+            for i in lst3:
+                lst4.insert(i, " ")
+            print("Output: ", "".join(lst4))
+
+    
+while True:
+    print("====Text Cipher====")
+    print("==Main Menu==")
+    print("Type 'help' in Main Menu for help")
+    main_input = (input("Cipher(C) or Decipher(D)? "))
+    main_input = main_input.lower()
+    if main_input == "cipher" or main_input == "c":
+        cipher()
+    elif main_input == "decipher" or main_input == "d":
+        decipher()
+    elif main_input == "main" or main_input == "m":
+        break
+    elif main_input == "help":
+        print("This is a program, based on Caesar's cipher, that can cipher and decipher text.")
+        print("Input a code number between 1 and 25 to change encryption.\n To decrypt, the same code will be needed.")
+        print("The word 'main' is reserved to return to main menu, however, it can be used with at least one other word.")
+    else:
+        print("No valid option selected")
+        break
